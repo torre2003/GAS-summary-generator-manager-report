@@ -323,8 +323,8 @@ SummaryReportManger.prototype.showSummary = function () {
         "Dirección",
         "N° departamento",
         "Precio publicado",
-        "Precio míńimo",
-        "Precio final",
+        "Precio mínimo",
+        "Precio de venta final",
         "Estado propiedad",
         "Días transcurridos",
         "Días presupuestados",
@@ -334,7 +334,7 @@ SummaryReportManger.prototype.showSummary = function () {
         "% presupuesto disponible",
         "Interés acumulado",
         "Margen esperado",
-        "Margen real",
+        "Margen real - Según egresos a la fecha",
         "URL XLS",
 
     ]
@@ -359,6 +359,8 @@ SummaryReportManger.prototype.showSummary = function () {
     ]
 
     summary_data = this.getValuesFromFiles();
+
+    this.cleanOutputData()
 
     this.showData(
         headers = headers,
