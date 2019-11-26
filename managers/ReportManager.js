@@ -188,7 +188,6 @@ function ReportManager() {
             },
             precio_final_venta: "M42",
             precio_esperado_venta: "M45",
-            costo_financiero_final: "M48",
             factura_final: {
                 valor_propiedad: "M52",
                 iva: "M54",
@@ -200,6 +199,11 @@ function ReportManager() {
                 total: "M64",
                 porcentaje_precio_venta: "M66",
             },
+            costo_financiero: {
+                interes: "M70",
+                estampillas: "M72",
+                total: "M74",
+            }
         },
         report: {
 
