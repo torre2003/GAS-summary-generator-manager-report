@@ -247,6 +247,10 @@ SummaryReportManger.prototype.getValuesFromFiles = function () {
 
 
         report_data = {
+            id_propiedad: report_manager.getValue(
+                field = report_manager.fields.details.id_propiedad,
+                data_sheet = report_manager.data_sheet.details
+            ),
             direccion: report_manager.getValue(
                 field = report_manager.fields.details.direccion,
                 data_sheet = report_manager.data_sheet.details
@@ -255,13 +259,20 @@ SummaryReportManger.prototype.getValuesFromFiles = function () {
                 field = report_manager.fields.details.depto,
                 data_sheet = report_manager.data_sheet.details
             ),
-            precio_publicado: "N/A",
+            comuna: report_manager.getValue(
+                field = report_manager.fields.details.comuna,
+                data_sheet = report_manager.data_sheet.details
+            ),
+            precio_publicado: report_manager.getValue(
+                field = report_manager.fields.details.precio_publicacion,
+                data_sheet = report_manager.data_sheet.details
+            ),
             precio_minimo: report_manager.getValue(
                 field = report_manager.fields.margin.precio_de_venta.presupuestado,
                 data_sheet = report_manager.data_sheet.margin
             ),
             precio_final: report_manager.getValue(
-                field = report_manager.fields.costs.resumen_finales.precio_final_venta,
+                field = report_manager.fields.costs.precio_final_venta,
                 data_sheet = report_manager.data_sheet.costs
             ),
             estado_propiedad: estado_actual,
@@ -320,32 +331,37 @@ SummaryReportManger.prototype.getValuesFromFiles = function () {
  */
 SummaryReportManger.prototype.showSummary = function () {
     headers = [
+        "Código Interno",
         "Dirección",
-        "N° departamento",
+        "N° D",
+        "Comuna",
+        "Estado actual",
         "Precio publicado",
-        "Precio mínimo",
+        "Precio mínimo esperado",
         "Precio de venta final",
-        "Estado propiedad",
+
         "Días transcurridos",
         "Días presupuestados",
-        "% días disponibles",
+        "Días disponibles (%)",
         "Presupuesto total",
         "Presupuesto gastado",
-        "% presupuesto disponible",
+        "Presupuesto disponible (%)",
         "Interés acumulado",
         "Margen esperado",
-        "Margen real - Según egresos a la fecha",
+        "Margen MÁX real - Según egresos a la fecha",
         "URL XLS",
 
     ]
 
     keys = [
+        "id_propiedad",
         "direccion",
         "depto",
+        "comuna",
+        "estado_propiedad",
         "precio_publicado",
         "precio_minimo",
         "precio_final",
-        "estado_propiedad",
         "dias_transcurridos",
         "dias_presupuestados",
         "porcentaje_dias_disponibles",

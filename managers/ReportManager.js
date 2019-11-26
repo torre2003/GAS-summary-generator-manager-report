@@ -30,11 +30,13 @@ function ReportManager() {
             id_propiedad: "B6",
             direccion: "B7",
             depto: "B8",
+            comuna: "C8",
             nombre_cliente: "B10",
             email: "B11",
             telefono: "B12",
             precio_esperado_uf: "B24",
-            precio_esperado: "C24"
+            precio_esperado: "C24",
+            precio_publicacion: "B26",
         },
         budget: {
             totales: {
@@ -117,75 +119,87 @@ function ReportManager() {
         costs: {
             time: {
                 fecha_inicio_processo: {
-                    fecha_inicial: "L4",
-                    fecha_final: "M4",
-                    dias: "N4",
-                    dias_acumulado_estimado: "P4",
-                    dias_acumulado_real: "Q4",
-                    dias_acumulado_delta: "R4",
+                    fecha_inicial: "N4",
+                    fecha_final: "O4",
+                    dias: "P4",
+                    dias_acumulado_estimado: "R4",
+                    dias_acumulado_real: "S4",
+                    dias_acumulado_delta: "T4",
                 },
                 alzamiento: {
-                    fecha_inicial: "L5",
-                    fecha_final: "M5",
-                    dias: "N5",
-                    dias_acumulado_estimado: "P5",
-                    dias_acumulado_real: "Q5",
-                    dias_acumulado_delta: "R5",
+                    fecha_inicial: "N5",
+                    fecha_final: "O5",
+                    dias: "P5",
+                    dias_acumulado_estimado: "R5",
+                    dias_acumulado_real: "S5",
+                    dias_acumulado_delta: "T5",
                 },
                 compra_e_inscripcion: {
-                    fecha_inicial: "L6",
-                    fecha_final: "M6",
-                    dias: "N6",
-                    dias_acumulado_estimado: "P6",
-                    dias_acumulado_real: "Q6",
-                    dias_acumulado_delta: "R6",
+                    fecha_inicial: "N6",
+                    fecha_final: "O6",
+                    dias: "P6",
+                    dias_acumulado_estimado: "R6",
+                    dias_acumulado_real: "S6",
+                    dias_acumulado_delta: "T6",
                 },
                 proyecto_remodelacion: {
-                    fecha_inicial: "L7",
-                    fecha_final: "M7",
-                    dias: "N7",
-                    dias_acumulado_estimado: "P7",
-                    dias_acumulado_real: "Q7",
-                    dias_acumulado_delta: "R7",
+                    fecha_inicial: "N7",
+                    fecha_final: "O7",
+                    dias: "P7",
+                    dias_acumulado_estimado: "R7",
+                    dias_acumulado_real: "S7",
+                    dias_acumulado_delta: "T7",
                 },
                 tiempo_de_venta: {
-                    fecha_inicial: "L8",
-                    fecha_final: "M8",
-                    dias: "N8",
-                    dias_acumulado_estimado: "P8",
-                    dias_acumulado_real: "Q8",
-                    dias_acumulado_delta: "R8",
+                    fecha_inicial: "N8",
+                    fecha_final: "O8",
+                    dias: "P8",
+                    dias_acumulado_estimado: "R8",
+                    dias_acumulado_real: "S8",
+                    dias_acumulado_delta: "T8",
                 },
                 inscripcion: {
-                    fecha_inicial: "L9",
-                    fecha_final: "M9",
-                    dias: "N9",
-                    dias_acumulado_estimado: "P9",
-                    dias_acumulado_real: "Q9",
-                    dias_acumulado_delta: "R9",
+                    fecha_inicial: "N9",
+                    fecha_final: "O9",
+                    dias: "P9",
+                    dias_acumulado_estimado: "R9",
+                    dias_acumulado_real: "S9",
+                    dias_acumulado_delta: "T9",
                 },
-                total: "N10"
+                total: "P10"
             },
             resumen_dias: {
-                utilizado: "K14",
-                presupuestado: "K16",
-                total: "K18",
+                utilizado: "M14",
+                presupuestado: "M16",
+                total: "M18",
             },
             resumen_presupuesto: {
-                utilizado: "K23",
-                presupuestado: "K25",
-                total: "K27",
+                utilizado: "M23",
+                presupuestado: "M25",
+                total: "M27",
             },
             resumen_financiero: {
-                interes_diario: "K31",
-                interes_acumulado: "K33"
+                interes_diario: "M31",
+                interes_acumulado: "M33"
             },
-            resumen_finales: {
-                precio_final_venta: "D2",
-                precio_esperado_venta: "D4",
-                costo_financiero_final: "D6"
+            margen_empresa: {
+                estimado: "M37",
+                real: "M39"
             },
-            link_carpeta_propiedad: "G2"
+            precio_final_venta: "M42",
+            precio_esperado_venta: "M45",
+            costo_financiero_final: "M48",
+            factura_final: {
+                valor_propiedad: "M52",
+                iva: "M54",
+                total: "M56"
+            },
+            iva: {
+                credito: "M60",
+                debito: "M62",
+                total: "M64",
+                porcentaje_precio_venta: "M66",
+            },
         },
         report: {
 
