@@ -306,12 +306,17 @@ SummaryReportManger.prototype.getValuesFromFiles = function () {
                 field = report_manager.fields.margin.margen_empresa.real,
                 data_sheet = report_manager.data_sheet.margin
             ),
+            margen_real_con_iva: report_manager.getValue(
+                field = report_manager.fields.margin.margen_final.real,
+                data_sheet = report_manager.data_sheet.margin
+            ),
         }
 
         report_data.porcentaje_dias_disponibles = (report_data.dias_presupuestados - report_data.dias_transcurridos) / report_data.dias_presupuestados
 
         report_data.porcentaje_presupuesto_disponible = (report_data.presupuesto_total - report_data.presupuesto_gastado) / report_data.presupuesto_total
 
+        report_data.porcentaje_de_margen = report_data.margen_real_con_iva / report_data.precio_final;
 
         report_data.file_id = this.report_files[file].id;
 
@@ -349,6 +354,8 @@ SummaryReportManger.prototype.showSummary = function () {
         "Interés acumulado",
         "Margen esperado",
         "Margen MÁX real - Según egresos a la fecha",
+        "Margen NETO de IVA real - Según egresos a la fecha",
+        "% Margen",
         "URL XLS",
 
     ]
@@ -371,6 +378,8 @@ SummaryReportManger.prototype.showSummary = function () {
         "interes_acumulado",
         "margen_esperado",
         "margen_real",
+        "margen_real_con_iva",
+        "porcentaje_de_margen",
         "file_url"
     ]
 

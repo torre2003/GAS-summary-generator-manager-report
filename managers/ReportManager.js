@@ -115,6 +115,16 @@ function ReportManager() {
                 real: "C9",
                 porcentaje: "D9",
             },
+            iva_neto: {
+                presupuestado: "B11",
+                real: "C11",
+                porcentaje: "D11",
+            },
+            margen_final: {
+                presupuestado: "B12",
+                real: "C12",
+                porcentaje: "D12",
+            },
         },
         costs: {
             time: {
