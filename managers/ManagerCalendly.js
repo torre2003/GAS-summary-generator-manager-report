@@ -1,4 +1,4 @@
-function CalendlyManager() {
+function ManagerCalendly() {
 
     this.document = null;
 
@@ -14,7 +14,7 @@ function CalendlyManager() {
 
 }
 
-CalendlyManager.prototype.initialize = function () {
+ManagerCalendly.prototype.initialize = function () {
 
     this.document = SpreadsheetApp.getActiveSpreadsheet();
 
@@ -24,7 +24,7 @@ CalendlyManager.prototype.initialize = function () {
 
 }
 
-CalendlyManager.prototype.initialize_dooris = function () {
+ManagerCalendly.prototype.initialize_dooris = function () {
 
     this.document = SpreadsheetApp.openById(file_id);
 
@@ -34,7 +34,7 @@ CalendlyManager.prototype.initialize_dooris = function () {
 /**
  * Obtiene el valor del campo
  */
-CalendlyManager.prototype.getValue = function (field, data_sheet) {
+ManagerCalendly.prototype.getValue = function (field, data_sheet) {
 
     if (data_sheet === undefined) {
 
@@ -49,7 +49,7 @@ CalendlyManager.prototype.getValue = function (field, data_sheet) {
 /**
 * Muestra el valor de un campo en la Hoja
 */
-CalendlyManager.prototype.showValue = function (field, value, data_sheet) {
+ManagerCalendly.prototype.showValue = function (field, value, data_sheet) {
 
     if (data_sheet === undefined) {
 
@@ -64,7 +64,7 @@ CalendlyManager.prototype.showValue = function (field, value, data_sheet) {
 /**
  * Función que revisa si existen nuevos registros en la hoja calendly y retorna las filas correspondientes
  */
-CalendlyManager.prototype.getNewRows = function () {
+ManagerCalendly.prototype.getNewRows = function () {
 
     var first_row = 2;
 
@@ -76,9 +76,14 @@ CalendlyManager.prototype.getNewRows = function () {
 
     for (var i = 0; i < values.length; i++) {
 
-        if (values[i][0] === '' && values[i][1] === '' && values[i][2] !== '') {
+        if ((values[i][0] === '' || values[i][1] === '') && values[i][2] !== '') {
 
-            rows.push(i + first_row);
+            rows.push({
+                'row': i + first_row,
+                'upload_megatron': values[i][0],
+                'upload_megatron': values[i][1],
+                'home_id': values[i][2],
+            });
 
         }
 
@@ -89,7 +94,7 @@ CalendlyManager.prototype.getNewRows = function () {
 }
 
 
-CalendlyManager.prototype.getCalendlyRow = function (row_id) {
+ManagerCalendly.prototype.getCalendlyRow = function (row_id) {
 
     range = this.data_sheet.calendly.getRange('A' + row_id + ':J' + row_id);
 
@@ -106,9 +111,11 @@ CalendlyManager.prototype.getCalendlyRow = function (row_id) {
 }
 
 
+
+
 function test_calendly() {
 
-    calendly_manager = new CalendlyManager()
+    calendly_manager = new ManagerCalendly()
 
     calendly_manager.initialize()
 
