@@ -455,6 +455,59 @@ ManagerDooris.prototype.findValueInColumn = function (column, data_sheet_var_nam
 
 }
 
+/**
+ * Extrae todos los datos ingresados respecto a una vivienda
+ */
+ManagerDooris.prototype.extractAllDataHome = function (house_id) {
+
+    let house_data = {
+        house: null,
+        inspections: [],
+        money_questions: null,
+    }
+
+    // extraccion de dados desde house
+    let rows = this.findValueInColumn(
+        column = "house_id", data_sheet_var_name = "houses", value = house_id
+    )
+
+    if (rows.length == 0) {
+
+        return null
+
+    }
+
+    house_data.house = this.getSheetRow(row_id = rows[0], data_sheet_var_name = "houses")
+
+    // Extracción de datos desde Inspections
+    rows = this.findValueInColumn(
+        column = "house_id", data_sheet_var_name = "inspections", value = house_id
+    )
+
+    for (let i = 0; i < rows.length; i++) {
+        const element = rows[i];
+        house_data.inspections.push(
+            this.getSheetRow(row_id = rows[i], data_sheet_var_name = "inspections")
+        )
+    }
+
+    // Money questions
+    rows = this.findValueInColumn(
+        column = "house_id", data_sheet_var_name = "money_questions", value = house_id
+    )
+
+    if (rows.length > 0) {
+
+        house_data.money_questions = this.getSheetRow(
+            row_id = rows[0], data_sheet_var_name = "money_questions"
+        )
+
+    }
+
+    return house_data
+
+}
+
 
 
 function test_manager_dooris() {
@@ -462,6 +515,10 @@ function test_manager_dooris() {
     manager_dooris = new ManagerDooris()
 
     manager_dooris.initialize()
+
+    manager_test = new ManagerTest()
+
+    manager_test.initialize()
 
     row_data = manager_dooris.getSheetRow(
         row_id = 3,
@@ -477,5 +534,13 @@ function test_manager_dooris() {
     Logger.log(
         rows
     )
+
+    house_data = manager_dooris.extractAllDataHome(house_id = "64a2ca5e")
+
+    manager_test.showValue(
+        field = "B2",
+        value = house_data
+    )
+
 
 }
