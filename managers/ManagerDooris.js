@@ -351,12 +351,6 @@ ManagerDooris.prototype.initialize = function () {
  */
 ManagerDooris.prototype.getValue = function (field, data_sheet) {
 
-    if (data_sheet === undefined) {
-
-        data_sheet = this.data_sheet.details
-
-    }
-
     return data_sheet.getRange(field + ":" + field).getCell(1, 1).getValue();
 
 }
@@ -366,13 +360,27 @@ ManagerDooris.prototype.getValue = function (field, data_sheet) {
 */
 ManagerDooris.prototype.showValue = function (field, value, data_sheet) {
 
-    if (data_sheet === undefined) {
-
-        data_sheet = this.data_sheet.main
-
-    }
-
     data_sheet.getRange(field + ":" + field).getCell(1, 1).setValue(value);
+
+}
+
+/**
+* Establece los valores de la fila correspondiente
+* row_id: id de la fila a modificar
+* data_sheet_var_name: nombre interno de la hoja a modificar
+* value: valores a ingresar, debe coincidir el número de columnas con el arreglo
+*/
+ManagerDooris.prototype.setRowValue = function (row_id, data_sheet_var_name, value) {
+
+    let data_sheet = this.data_sheet[data_sheet_var_name]
+
+    let string_range = this.ranges_data[data_sheet_var_name].replace("[row_a]", row_id).replace("[row_b]", row_id)
+
+    let range = data_sheet.getRange(string_range);
+
+    range.setValues([
+        value
+    ])
 
 }
 
@@ -384,8 +392,9 @@ ManagerDooris.prototype.showValue = function (field, value, data_sheet) {
  * data_sheet_var_name: nombre de la data sheet en arreglo 
  *      houses, inspectors, inspections, money_questions, 
  *      inspection_areas, onboarding
+ * how_dictionary: establece si la respuesta es como arreglo o diccionario
  */
-ManagerDooris.prototype.getSheetRow = function (row_id, data_sheet_var_name) {
+ManagerDooris.prototype.getSheetRow = function (row_id, data_sheet_var_name, how_dictionary = true) {
 
     let data_sheet = this.data_sheet[data_sheet_var_name]
 
@@ -396,6 +405,12 @@ ManagerDooris.prototype.getSheetRow = function (row_id, data_sheet_var_name) {
     range = data_sheet.getRange(string_range);
 
     values = range.getValues()[0];
+
+    if (!how_dictionary) {
+
+        return values;
+
+    }
 
     dictionary = {}
 
@@ -457,6 +472,7 @@ ManagerDooris.prototype.findValueInColumn = function (column, data_sheet_var_nam
 
 /**
  * Extrae todos los datos ingresados respecto a una vivienda
+ * param houes_id: id de la propiedad trabajada
  */
 ManagerDooris.prototype.extractAllDataHome = function (house_id) {
 
@@ -508,6 +524,116 @@ ManagerDooris.prototype.extractAllDataHome = function (house_id) {
 
 }
 
+/**
+ * Crea un nuevo registro en Dooris
+ * param house_id: id unica de la propiedad
+ * param address: Dirección de la propiedad
+ * param description: Descripción de la propiedad
+ * param image: Imagén de portada de la propiedad
+ * param lat_long: coordenadas geograficas
+ * param check_in: Fecha de llegada?
+ * param time: Timestamp fecha de visita?
+ * param created_by: email del usuario creador de la propiedad
+ */
+ManagerDooris.prototype.createNewHome = function (
+    house_id,
+    address = null,
+    description = null,
+    image = null,
+    lat_long = null,
+    check_in = null,
+    time = null,
+    created_by = null
+) {
+    let rows = this.findValueInColumn(
+        column = "house_id", data_sheet_var_name = "houses", value = house_id
+    )
+
+    if (rows.length > 0) {
+
+        return null
+
+    }
+
+    let data_sheet = this.data_sheet["houses"]
+
+    new_house = [
+        house_id,
+        address,
+        description,
+        image,
+        lat_long,
+        check_in,
+        time,
+        created_by
+    ]
+
+    data_sheet.appendRow(new_house);
+
+    return new_house
+}
+
+/**
+ * Actualiza un registro de la tabal House en Dooris
+ * param house_id: id unica de la propiedad
+ * param address: Dirección de la propiedad
+ * param description: Descripción de la propiedad
+ * param image: Imagén de portada de la propiedad
+ * param lat_long: coordenadas geograficas
+ * param check_in: Fecha de llegada?
+ * param time: Timestamp fecha de visita?
+ * param created_by: email del usuario creador de la propiedad
+ */
+ManagerDooris.prototype.UpdateHome = function (
+    house_id,
+    address = null,
+    description = null,
+    image = null,
+    lat_long = null,
+    check_in = null,
+    time = null,
+    created_by = null
+) {
+    let rows = this.findValueInColumn(
+        column = "house_id", data_sheet_var_name = "houses", value = house_id
+    )
+
+    if (rows.length == 0) {
+
+        return null
+
+    }
+
+    house_row = rows[0]
+
+    house = this.getSheetRow(
+        row_id = house_row, data_sheet_var_name = "houses",
+        how_dictionary = false
+    )
+
+    house[1] = address == null ? house[1] : address
+
+    house[2] = description == null ? house[2] : description
+
+    house[3] = image == null ? house[3] : image
+
+    house[4] = lat_long == null ? house[4] : lat_long
+
+    house[5] = check_in == null ? house[5] : check_in
+
+    house[6] = time == null ? house[6] : time
+
+    house[7] = created_by == null ? house[7] : created_by
+
+
+    this.setRowValue(
+        row_id = house_row,
+        data_sheet_var_name = "houses",
+        value = house
+    )
+
+}
+
 
 
 function test_manager_dooris() {
@@ -542,5 +668,18 @@ function test_manager_dooris() {
         value = house_data
     )
 
+    new_data = manager_dooris.createNewHome(
+        house_id = "aa1",
+        address = "null1",
+        description = "n2ull",
+        image = "null3",
+        lat_long = "nul2l",
+        check_in = "nu1ll",
+        time = "null3",
+        created_by = "nul2l"
+    )
 
+    if (new_data == null) {
+        manager_dooris.UpdateHome(home_id = "aa1", created_by = "EvilLink")
+    }
 }
