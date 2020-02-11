@@ -1,6 +1,6 @@
 function ApiMegatron() {
 
-  this.access_token = PropertiesService.getScriptProperties().getProperty("access_token");;
+  this.access_token = PropertiesService.getScriptProperties().getProperty("megatron_access_token");;
 
   this.url_megatron = PropertiesService.getScriptProperties().getProperty("url_megatron");
 

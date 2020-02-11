@@ -26,7 +26,7 @@ function checkNewDataCalendly() {
         if (response.status === 'ok') {
 
             dooris_row = manager_dooris.createNewHome(
-                house_id = row.home_id,
+                house_id = "M" + row.home_id,
                 address = response.home_data.address,
                 description = null,
                 image = null,
@@ -39,7 +39,7 @@ function checkNewDataCalendly() {
             if (dooris_row == null) {
 
                 manager_dooris.UpdateHome(
-                    house_id = row.home_id,
+                    house_id = "M" + row.home_id,
                     address = response.home_data.address,
                     description = null,
                     image = null,
