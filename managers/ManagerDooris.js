@@ -661,11 +661,11 @@ function test_manager_dooris() {
         rows
     )
 
-    house_data = manager_dooris.extractAllDataHome(house_id = "64a2ca5e")
+    house_data = manager_dooris.extractAllDataHome(house_id = "58eb39fq")
 
     manager_test.showValue(
         field = "B2",
-        value = house_data
+        value = JSON.stringify(house_data)
     )
 
     new_data = manager_dooris.createNewHome(

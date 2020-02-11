@@ -4,20 +4,75 @@ function checkNewDataCalendly() {
 
     manager_calendly.initialize()
 
-    new_rows = calendly_manager.getNewRows()
+    api_megatron = new ApiMegatron()
+
+    api_megatron.initialize()
+
+    manager_dooris = new ManagerDooris()
+
+    manager_dooris.initialize()
+
+    new_rows = manager_calendly.getNewRows()
 
     for (let i = 0; i < new_rows.length; i++) {
 
         const row = new_rows[i];
 
-        if (row.upload_megatron !== true) {
-            //Enviamos información a megatron
+        let response = api_megatron.uploadCommentData(
+            home_id = row.home_id,
+            schedule_date = row.date_calendly
+        )
+
+        if (response.status === 'ok') {
+
+            dooris_row = manager_dooris.createNewHome(
+                house_id = row.home_id,
+                address = response.home_data.address,
+                description = null,
+                image = null,
+                lat_long = response.home_data.latitude + ', ' + response.home_data.longitude,
+                check_in = null,
+                time = row.date_calendly,
+                created_by = row.email_home_advisor
+            )
+
+            if (dooris_row == null) {
+
+                manager_dooris.UpdateHome(
+                    house_id = row.home_id,
+                    address = response.home_data.address,
+                    description = null,
+                    image = null,
+                    lat_long = response.home_data.latitude + ', ' + response.home_data.longitude,
+                    check_in = null,
+                    time = row.date_calendly,
+                    created_by = row.email_home_advisor
+                )
+            }
+
+            manager_calendly.setCalendlyRow(
+                row_id = row.row,
+                upload_megatron = true,
+                upload_dooris = true,
+                home_id = null,
+                date_calendly = null,
+                email_home_advisor = null,
+                address = response.home_data.address,
+                lat_long = response.home_data.latitude + ', ' + response.home_data.longitude
+            )
+
+
+        } else {
+
         }
 
-        if (row.upload_dooris !== true) {
-            //checqueamos si la propiedad no existe se ingresa, sino 
-            // se actualiza el parametro timestamp de la primera hoja
-        }
+        manager_calendly.showValue(field = "A10", value = response, data_sheet = undefined)
+
+        //Enviamos información a megatron
+
+        //checqueamos si la propiedad no existe se ingresa, sino 
+        // se actualiza el parametro timestamp de la primera hoja
+
 
     }
 
