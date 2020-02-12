@@ -62,11 +62,20 @@ function checkNewDataCalendly() {
             )
 
 
+
         } else {
-
+            // En caso de error
+            manager_calendly.setCalendlyRow(
+                row_id = row.row,
+                upload_megatron = false,
+                upload_dooris = false,
+                home_id = null,
+                date_calendly = null,
+                email_home_advisor = null,
+                address = response.message,
+                lat_long = response.exception
+            )
         }
-
-        manager_calendly.showValue(field = "A10", value = response, data_sheet = undefined)
 
         //Enviamos información a megatron
 
