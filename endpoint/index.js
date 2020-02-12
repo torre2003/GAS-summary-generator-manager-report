@@ -9,6 +9,13 @@ function doGet(request) {
 
     endpoint_access_token = PropertiesService.getScriptProperties().getProperty("endpoint_access_token");
 
+
+    manager_test.showValue(
+        field = "C1",
+        value = JSON.stringify(home_id)
+    )
+
+
     if (access_token == endpoint_access_token) {
 
         manager_dooris = new ManagerDooris()
@@ -16,6 +23,11 @@ function doGet(request) {
         manager_dooris.initialize()
 
         house_data = manager_dooris.extractAllDataHome(house_id = home_id)
+
+        manager_test.showValue(
+            field = "C2",
+            value = JSON.stringify(house_data)
+        )
 
         if (house_data == null) {
 
@@ -30,7 +42,3 @@ function doGet(request) {
     return ContentService.createTextOutput(JSON.stringify({ error: "Invalid access token" }));
 
 }
-
-
-
-
